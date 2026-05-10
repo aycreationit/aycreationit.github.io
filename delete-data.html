@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpendSense — Data Deletion</title>
+    <meta name="description" content="How to request deletion of your data from the SpendSense Android app.">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --fg: #1a1a1a;
+            --muted: #555;
+            --accent: #2c5aa0;
+            --rule: #e5e5e5;
+            --code-bg: #f5f5f5;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #121212;
+                --fg: #e8e8e8;
+                --muted: #a0a0a0;
+                --accent: #6da0ff;
+                --rule: #2a2a2a;
+                --code-bg: #1e1e1e;
+            }
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--fg);
+            background: var(--bg);
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 32px 20px 64px;
+        }
+        h1 {
+            font-size: 28px;
+            margin: 0 0 4px;
+            font-weight: 600;
+        }
+        .meta {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--rule);
+        }
+        h2 {
+            font-size: 20px;
+            margin: 32px 0 8px;
+            font-weight: 600;
+        }
+        h3 {
+            font-size: 16px;
+            margin: 20px 0 8px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+        p, li {
+            margin: 0 0 12px;
+        }
+        ol, ul {
+            padding-left: 24px;
+        }
+        a {
+            color: var(--accent);
+        }
+        code {
+            background: var(--code-bg);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 13px;
+        }
+        .footer {
+            margin-top: 48px;
+            padding-top: 16px;
+            border-top: 1px solid var(--rule);
+            color: var(--muted);
+            font-size: 13px;
+        }
+        .callout {
+            background: var(--code-bg);
+            border-left: 3px solid var(--accent);
+            padding: 12px 16px;
+            margin: 16px 0;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Data Deletion</h1>
+<p class="meta">SpendSense — Android personal expense tracker<br>
+Published by <strong>AYCreation IT Services</strong> · Last updated: May 2026</p>
+
+<p>This page describes how to request deletion of your SpendSense data, what gets deleted, and what is retained.</p>
+
+<h2>What data we hold</h2>
+<p>SpendSense stores the following types of user data:</p>
+<ul>
+    <li><strong>Local on-device data</strong>: transactions, budgets, goals, splits, achievements, app preferences. Stored in an encrypted SQLCipher database on your device.</li>
+    <li><strong>Cloud-synced data (only if you enabled cloud sync)</strong>: transactions and metadata in Google Firestore, scoped to your anonymous Firebase user ID.</li>
+    <li><strong>Encrypted Drive backups (only if you enabled Drive backup)</strong>: AES-256-encrypted backup blobs in your Google Drive's app-folder. Note: these are stored in <em>your</em> Google Drive, not ours — only you can access them.</li>
+    <li><strong>Subscription billing records</strong>: held by Google Play, not by us. We do not store payment information.</li>
+</ul>
+
+<h2>How to delete your data</h2>
+
+<h3>Option 1 — In-app (recommended; fastest, deletes everything)</h3>
+<ol>
+    <li>Open the SpendSense app.</li>
+    <li>Go to <strong>More → Settings</strong>.</li>
+    <li>Scroll to <strong>Account</strong> and tap <strong>Delete account</strong>.</li>
+    <li>Confirm the deletion.</li>
+</ol>
+<p>This action:</p>
+<ul>
+    <li>Wipes the local encrypted database immediately.</li>
+    <li>Removes your Firestore user document and all synced subcollections within 24 hours.</li>
+    <li>Revokes the Drive backup permission grant (existing backups remain in your Drive until you delete them manually — see Option 4 below).</li>
+</ul>
+
+<h3>Option 2 — Clear app data (local only)</h3>
+<ol>
+    <li>Open Android <strong>Settings → Apps → SpendSense → Storage</strong>.</li>
+    <li>Tap <strong>Clear data</strong>.</li>
+</ol>
+<p>This deletes all on-device data immediately. Cloud-synced data and Drive backups remain — use Option 1 or contact us for those.</p>
+
+<h3>Option 3 — Uninstall (local only)</h3>
+<p>Uninstalling the app removes all local data. Cloud-synced data and Drive backups remain — use Option 1 before uninstalling, or contact us to remove them.</p>
+
+<h3>Option 4 — Delete Drive backups manually</h3>
+<ol>
+    <li>Open <a href="https://drive.google.com">drive.google.com</a> and sign in with the account you used for backup.</li>
+    <li>Click the gear icon → <strong>Settings → Manage apps</strong>.</li>
+    <li>Find <strong>SpendSense</strong> in the list.</li>
+    <li>Click <strong>Options → Delete hidden app data</strong>.</li>
+</ol>
+
+<h3>Option 5 — Email request (fallback)</h3>
+<p>If you cannot use the in-app option (for example, you have already uninstalled), email us at <a href="mailto:support@aycreation.in">support@aycreation.in</a> with the subject line <code>Data deletion request</code>. We will respond within 7 business days and complete the deletion within 30 days.</p>
+
+<div class="callout">
+    <strong>To help us locate your records</strong>, please include in the email:<br>
+    – the Google account email you used to sign in to SpendSense (if any)<br>
+    – the approximate date you installed the app
+</div>
+
+<h2>What is retained, and for how long</h2>
+<ul>
+    <li><strong>Subscription transaction records</strong>: retained by Google Play per their Play Billing terms — typically 7 years for tax/accounting compliance. We have no control over these. You can manage your subscriptions at <a href="https://play.google.com/store/account/subscriptions">play.google.com/store/account/subscriptions</a>.</li>
+    <li><strong>Anonymous server logs</strong> (if any): aggregated diagnostic logs from Firebase that do not identify you may be retained by Google for up to 90 days per their default settings.</li>
+    <li><strong>Email correspondence</strong>: if you contact us via email, we retain the email thread for up to 12 months for support continuity, after which it is deleted.</li>
+</ul>
+
+<h2>Confirmation</h2>
+<p>For Option 1 (in-app), deletion is immediate for local data and within 24 hours for cloud data — no further confirmation is sent. For Option 5 (email), we will send you a confirmation email when deletion is complete.</p>
+
+<h2>Contact</h2>
+<p>For deletion requests or questions about this page, contact us at <a href="mailto:support@aycreation.in">support@aycreation.in</a>.</p>
+
+<div class="footer">
+    SpendSense is published by AYCreation IT Services. See also our <a href="privacy.html">Privacy Policy</a>.
+</div>
+
+</body>
+</html>
