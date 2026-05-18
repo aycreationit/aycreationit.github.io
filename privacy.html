@@ -1,86 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SpendSense — Privacy Policy</title>
-    <meta name="description" content="Privacy policy for the SpendSense Android app — automatic personal expense tracking via SMS and UPI notification parsing.">
-    <style>
-        :root {
-            --bg: #ffffff;
-            --fg: #1a1a1a;
-            --muted: #555;
-            --accent: #2c5aa0;
-            --rule: #e5e5e5;
-        }
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg: #121212;
-                --fg: #e8e8e8;
-                --muted: #a0a0a0;
-                --accent: #6da0ff;
-                --rule: #2a2a2a;
-            }
-        }
-        * { box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            line-height: 1.6;
-            color: var(--fg);
-            background: var(--bg);
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 32px 20px 64px;
-        }
-        h1 {
-            font-size: 28px;
-            margin: 0 0 4px;
-            font-weight: 600;
-        }
-        .meta {
-            color: var(--muted);
-            font-size: 14px;
-            margin-bottom: 32px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--rule);
-        }
-        h2 {
-            font-size: 18px;
-            margin: 28px 0 8px;
-            font-weight: 600;
-        }
-        p {
-            margin: 0 0 16px;
-            color: var(--fg);
-        }
-        a {
-            color: var(--accent);
-        }
-        .footer {
-            margin-top: 48px;
-            padding-top: 16px;
-            border-top: 1px solid var(--rule);
-            color: var(--muted);
-            font-size: 13px;
-        }
-    </style>
-</head>
-<body>
-
 <h1>Privacy Policy</h1>
 <p class="meta">SpendSense — Android personal expense tracker<br>
-Published by <strong>AYCreation IT Services</strong> · Last updated: May 2026</p>
+Published by <strong>AYCreation IT Services</strong> · Last updated: May 18, 2026</p>
 
 <p>This policy explains what data the SpendSense Android app collects, how it is stored, and your rights as a user. By installing the app you agree to the practices described below.</p>
 
 <h2>Data Collection</h2>
-<p>SpendSense reads bank SMS messages and payment-app notifications on your device to automatically detect financial transactions. From those messages we extract: transaction amounts, merchant names, bank names, and timestamps. We do <strong>not</strong> collect: full SMS bodies, OTP codes, passwords, or personally identifying information beyond what you optionally provide via Google Sign-In.</p>
+<p>SpendSense reads bank SMS messages and payment-app notifications on your device to automatically detect financial transactions. From those messages we extract: <strong>transaction amounts, merchant names, bank names, partial account numbers (typically the last 4 digits as they appear in the SMS), and timestamps</strong>.</p>
+
+<p>We do <strong>not</strong> collect: full SMS bodies, OTP codes, passwords, or personally identifying information beyond what you optionally provide via Google Sign-In.</p>
+
+<p>The app may also collect the following, only when you opt in to the respective feature:</p>
+<ul>
+  <li><strong>Approximate device location</strong> (latitude / longitude) captured at the moment each transaction is detected, used to tag the transaction on the map view. Location is captured once per transaction; the app does not track your location continuously in the background. You can revoke this permission in Android Settings at any time.</li>
+  <li><strong>Receipt images</strong> you choose to attach to a transaction. These are stored locally in app-private storage and are never uploaded to our servers, your cloud sync, or your Drive backups.</li>
+  <li><strong>Google Sign-In identity</strong> — if you sign in with Google, we retrieve your email address, display name, and profile photo URL from your Google account, used solely for account identification and display within the app.</li>
+</ul>
 
 <h2>Data Storage</h2>
-<p>All financial data is stored locally on your device in an encrypted database (SQLCipher, AES-256). The encryption key is derived from your device's identifier and is never transmitted off the device. Your data never leaves your device unless you explicitly enable Cloud Sync.</p>
+<p>All financial data is stored locally on your device in an encrypted database (SQLCipher, AES-256). The encryption key is derived from your device's identifier and is never transmitted off the device. Your data never leaves your device unless you explicitly enable Cloud Sync or Drive Backup.</p>
 
 <h2>Cloud Sync (Optional)</h2>
-<p>If you sign in with Google and enable the Sync feature, a subset of your transaction data — excluding raw SMS content and full account numbers — is uploaded to Google Firestore over HTTPS. The data is scoped to your Firebase user ID and is not accessible to other users. You can delete your cloud data at any time from the in-app Settings screen.</p>
+<p>If you sign in with Google and enable the Sync feature, a subset of your transaction data is uploaded to Google Firestore over HTTPS. The data is scoped to your Firebase user ID and is not accessible to other users.</p>
+
+<p>The synced subset includes: amount, type, category, source, merchant, note, bank name, timestamp, edit-state, and currency. The following fields are <strong>never</strong> synced:</p>
+<ul>
+  <li>Raw SMS bodies</li>
+  <li>Account last-4 digits</li>
+  <li>Location data (latitude / longitude)</li>
+  <li>Receipt images</li>
+</ul>
+
+<p>You can delete your cloud data at any time from the in-app Settings screen (see <em>Data Deletion</em> below).</p>
+
+<h2>Trial-Start Anchor</h2>
+<p>To prevent abuse of the 30-day free trial via uninstall/reinstall cycles, the app writes a single immutable document to Firestore at <code>users/{your-uid}/license/trial</code>. This document contains only your Firebase user ID and the timestamp at which your trial began — no personal or financial data. It is retained as a one-way anti-fraud anchor and cannot be deleted by users (this restriction is enforced by Firestore security rules). If you delete your account from in-app Settings, this anchor remains.</p>
+
+<h2>Encrypted Drive Backups (Optional)</h2>
+<p>If you sign in with Google and enable Drive Backup, the app uploads AES-256-encrypted backup blobs to your own Google Drive's hidden app-folder. We have no access to these backups; only you can read them via the SpendSense app on a device signed in to the same Google account. Receipt images are stripped from these backups (they remain local-only).</p>
 
 <h2>SMS &amp; Notification Access</h2>
 <p>We request the <code>READ_SMS</code> and Notification Listener permissions solely to detect bank- and payment-app-originated transaction messages. We do not read personal SMS conversations, social-media notifications, or any non-financial messages. SMS bodies are processed on-device and discarded once the transaction is parsed; only the extracted fields (amount, merchant, bank, timestamp) are persisted.</p>
@@ -96,13 +52,16 @@ Published by <strong>AYCreation IT Services</strong> · Last updated: May 2026</
 <strong>Google Drive</strong> (Google, optional) — for encrypted backups, only if you enable backup.</p>
 
 <h2>Data Retention</h2>
-<p>On-device data is retained until you delete it via the app, clear app data from Android Settings, or uninstall the app. Cloud-synced data is retained until you delete your account from in-app Settings, after which it is removed from Firestore within 24 hours.</p>
+<p>On-device data is retained until you delete it via the app, clear app data from Android Settings, or uninstall the app. Cloud-synced data is retained until you delete your account from in-app Settings, after which it is removed from Firestore immediately (or within 24 hours under poor network conditions). The trial-start anchor described above is retained permanently.</p>
 
 <h2>Data Deletion</h2>
-<p>You can delete all your data by any of the following:</p>
-<p>1. Tapping <strong>Delete account</strong> in the in-app Settings — removes both local and cloud data.<br>
-2. Clearing app data from Android Settings — removes local data only.<br>
-3. Uninstalling the app — removes local data; cloud data persists until step 1.</p>
+<p>You can delete your data by any of the following:</p>
+<ol>
+  <li><strong>Delete account in-app Settings</strong> — removes your synced Firestore data (transactions, budgets, and the user record) and signs you out. Local data on this device remains so you can continue to use SpendSense offline. To also remove local data, use step 2.</li>
+  <li><strong>Clear app data in Android Settings</strong> — removes all on-device data (encrypted database, receipt images, preferences). Cloud-synced data is not affected.</li>
+  <li><strong>Uninstall the app</strong> — removes all local data. Cloud-synced data and Drive backups persist until you remove them via step 1 and your Drive account respectively.</li>
+</ol>
+<p>For complete deletion instructions including how to remove Drive backups, see the <a href="delete-data.html">Data Deletion</a> page.</p>
 
 <h2>Children's Privacy</h2>
 <p>SpendSense is not directed at children under 13. We do not knowingly collect personal information from children. If you believe a child has provided us with information, please contact us at the email below and we will delete it.</p>
@@ -111,14 +70,16 @@ Published by <strong>AYCreation IT Services</strong> · Last updated: May 2026</
 <p>We may update this policy from time to time. Material changes will be communicated via an in-app notice and the "Last updated" date at the top of this page. Continued use of the app after a change constitutes acceptance of the revised policy.</p>
 
 <h2>Your Rights</h2>
-<p>You have the right to access, correct, export, or delete your data at any time. To export your data, use the in-app <strong>Export</strong> feature in Settings. For other requests, contact us at the email below.</p>
+<p>You have the right to access, correct, export, or delete your data at any time:</p>
+<ul>
+  <li><strong>Access &amp; correction</strong> — every transaction is visible and editable in the app.</li>
+  <li><strong>Export</strong> — SpendSense Premium subscribers can export CSV or PDF directly from the in-app Settings. If you do not have a Premium subscription, email us at the address below and we will send you a CSV copy of your data within 7 business days, free of charge.</li>
+  <li><strong>Deletion</strong> — see <em>Data Deletion</em> above.</li>
+</ul>
 
 <h2>Contact</h2>
-<p>For privacy concerns, data requests, or questions about this policy, contact us at <a href="mailto:support@aycreation.in">support@aycreation.in</a>.</p>
+<p>For privacy concerns, data requests, or questions about this policy, contact us at <a href="mailto:info@aycreation.com">info@aycreation.com</a>.</p>
 
 <div class="footer">
     SpendSense is published by AYCreation IT Services. This policy applies only to the SpendSense Android application and not to any other product or service.
 </div>
-
-</body>
-</html>
